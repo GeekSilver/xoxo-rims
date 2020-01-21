@@ -1,0 +1,27 @@
+#what features to include?
+Features:
+  - SuperAdmin a/c with option to change default password ( only 1 )
+  - SuperAdmin Login
+  - Adding rims 
+  - Watermarking rims
+  - Editing rims
+  - Purchase rims
+
+#what to build first?
+Purchase Rims:
+  view listed rims (GET) *:
+    filter listed rims:
+      - by price
+      - by size
+      - refresh to undo filter
+    view one specific rim (chrome):
+      add rim to cart:
+        see rims in cart
+        remove rims in cart (all or one by one)
+        checkout
+        return to listed rims
+    add rim(s) to cart:
+    remove rim(s) from cart:
+    checkout (purchase rim(s)):
+
+Adding rims:
