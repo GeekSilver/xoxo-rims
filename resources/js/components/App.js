@@ -11,6 +11,8 @@ import store from '../store';
 import {persistor} from '../store';
 import Rim from './container/Rim';
 
+import '../../../node_modules/@fortawesome/fontawesome-free/js/all';
+
 class App extends Component {
     render(){
         return (

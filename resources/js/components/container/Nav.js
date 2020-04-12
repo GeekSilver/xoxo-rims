@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import CartItemsDropdown from '../CartItemsDropdown';
 import {
     filterAsc,
     filterDesc,
@@ -10,11 +11,13 @@ import {
     } from '../../actions/rimAction';
 
 
+
 class Nav extends Component {
 
     constructor(props){
         super(props)
         this.showSliderVal = this.showSliderVal.bind(this);
+        this.cartTotal = this.cartTotal.bind(this);
         
     }
 
@@ -55,6 +58,17 @@ class Nav extends Component {
         this.props.filterByValue(slider.value,this.props.rimsHist,attr,val);
     }
 
+    // calculate cart total
+    cartTotal(items){
+        let total = 0;
+        items.forEach(item => {
+            total += parseInt(item.price); 
+        })
+        return total;
+    }
+
+
+
 
     render () {
         return (
@@ -85,7 +99,7 @@ class Nav extends Component {
                 </li>
                 <li className="nav-item dropdown">
                     <a 
-                    className={`nav-link dropdown-toggle`}
+                    className="nav-link dropdown-toggle"
                     id="dropdown-filter"
                     data-toggle="dropdown"
                     role="button"
@@ -165,6 +179,19 @@ class Nav extends Component {
 
                     </div>
                 </li>
+                <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" 
+                        data-toggle="dropdown"
+                        data-target="#shopping-cart">
+                        <i className="fas fa-shopping-cart"></i>
+                        {this.cartTotal(this.props.cart)
+                        .toLocaleString('en-KE',{
+                        style:'currency',
+                        currency:'KES'
+                        }) }
+                    </a>
+                    <CartItemsDropdown total={this.cartTotal(this.props.cart)} items={this.props.cart}/>
+                </li>
             </ul>
         </div>
     </div>            
@@ -180,7 +207,8 @@ const mapStateToProps = (state) => {
 
     return {
       rims: state.getRimsReducer.rims,
-      rimsHist: state.getRimsReducer.rimsHist
+      rimsHist: state.getRimsReducer.rimsHist,
+      cart: state.cartReducer.cart
     }
        
 }
