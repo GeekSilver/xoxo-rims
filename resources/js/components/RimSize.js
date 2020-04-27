@@ -5,7 +5,7 @@ const RimSize = ({size}) => (
     style={{
         position:"absolute",
         top:0,
-        right:"7px",
+        right:"17px",
         fontSize:"1.5em",
         color:"silvergrey",
         fontWeight:"bolder"

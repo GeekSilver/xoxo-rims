@@ -81361,12 +81361,13 @@ module.exports = function(module) {
 /*!********************************************!*\
   !*** ./resources/js/actions/cartAction.js ***!
   \********************************************/
-/*! exports provided: addToCart */
+/*! exports provided: addToCart, removeFromCart */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addToCart", function() { return addToCart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeFromCart", function() { return removeFromCart; });
 function addToCart(rim, cart) {
   return function (dispatch) {
     dispatch({
@@ -81378,6 +81379,19 @@ function addToCart(rim, cart) {
     });
   };
 }
+;
+function removeFromCart(rim, cart) {
+  return function (dispatch) {
+    dispatch({
+      type: "REMOVE_FROM_CART",
+      payload: {
+        rim: rim,
+        cart: cart
+      }
+    });
+  };
+}
+;
 
 /***/ }),
 
@@ -81646,6 +81660,10 @@ if (document.getElementById('root')) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _actions_cartAction__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/cartAction */ "./resources/js/actions/cartAction.js");
+
+
  // render cart items iteratively
 
 var CartItemsDropdown = function CartItemsDropdown(props) {
@@ -81656,13 +81674,23 @@ var CartItemsDropdown = function CartItemsDropdown(props) {
       key: item.id,
       className: "dropdown-item"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
-      className: "table"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
-      className: "table",
+      className: "table table-responsive"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+      className: "",
       toggle: "#tbody-".concat(item.id)
-    }, item.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
+    }, item.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "(", item.count, ")"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
       id: "tbody-".concat(item.id)
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "size"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, item.size)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "color"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, item.color)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, item.price)))));
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "size"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, item.size)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "color"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, item.color)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, item.price))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tfoot", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      onClick: function onClick() {
+        return props.removeFromCart(item, props.items);
+      },
+      className: "d-flex align-items-center justify-content-around"
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+      className: "fa fa-trash"
+    }), "Remove"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, (item.count * item.price).toLocaleString('en-KE', {
+      style: 'currency',
+      currency: 'KES'
+    }))))));
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "float-right"
   }, props.total.toLocaleString('en-KE', {
@@ -81671,7 +81699,10 @@ var CartItemsDropdown = function CartItemsDropdown(props) {
   })));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (CartItemsDropdown);
+var mapDispatchToProps = {
+  removeFromCart: _actions_cartAction__WEBPACK_IMPORTED_MODULE_2__["removeFromCart"]
+};
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatchToProps)(CartItemsDropdown));
 
 /***/ }),
 
@@ -81725,9 +81756,9 @@ var RimPrice = function RimPrice(_ref) {
     style: {
       fontWeight: 600,
       fontSize: "1.7em",
-      color: "#FFF",
+      color: "black",
       fontFamily: "comic",
-      backgroundColor: "black",
+      backgroundColor: "#FFF",
       opacity: 0.5,
       borderRadius: "10px"
     }
@@ -81760,7 +81791,7 @@ var RimSize = function RimSize(_ref) {
     style: {
       position: "absolute",
       top: 0,
-      right: "7px",
+      right: "17px",
       fontSize: "1.5em",
       color: "silvergrey",
       fontWeight: "bolder"
@@ -81871,9 +81902,19 @@ function (_Component) {
     value: function cartTotal(items) {
       var total = 0;
       items.forEach(function (item) {
-        total += parseInt(item.price);
+        total += parseInt(item.price) * parseInt(item.count);
       });
       return total;
+    } // Number of items in cart
+
+  }, {
+    key: "cartLength",
+    value: function cartLength(items) {
+      var length = 0;
+      items.forEach(function (item) {
+        length += parseInt(item.count);
+      });
+      return length;
     }
   }, {
     key: "render",
@@ -81981,10 +82022,13 @@ function (_Component) {
         "data-target": "#shopping-cart"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fas fa-shopping-cart"
-      }), this.cartTotal(this.props.cart).toLocaleString('en-KE', {
-        style: 'currency',
-        currency: 'KES'
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CartItemsDropdown__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }), this.cartLength(this.props.cart) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "badge badge-warning text-center mb-3",
+        style: {
+          color: "black",
+          verticalAlign: "middle"
+        }
+      }, this.cartLength(this.props.cart)) : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CartItemsDropdown__WEBPACK_IMPORTED_MODULE_3__["default"], {
         total: this.cartTotal(this.props.cart),
         items: this.props.cart
       })))));
@@ -82072,11 +82116,11 @@ function (_Component) {
 
       var rim = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "card col-md-4 offset-md-4"
+        className: "card col-md-4 offset-md-4 mt-1"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: "storage/".concat(rim.image),
         alt: "image of the rim",
-        className: "card-img-top",
+        className: "card-img-top mt-1",
         style: {
           display: "block",
           maxWidth: "100%",
@@ -82086,13 +82130,19 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
-        className: "card-title"
-      }, rim.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "card-title font-weight-bolder"
+      }, rim.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-text"
-      }, "Price: ", Number(rim.price).toLocaleString('en-KE', {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "font-weight-bold"
+      }, "Price: "), Number(rim.price).toLocaleString('en-KE', {
         style: 'currency',
         currency: 'KES'
-      }), "Size: ", rim.size, "Color: ", rim.color), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "font-weight-bold"
+      }, "Size: "), rim.size), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "font-weight-bold"
+      }, "Color:  "), rim.color)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#",
         className: "btn btn-primary",
         onClick: function onClick() {
@@ -82262,14 +82312,75 @@ var cartReducer = function cartReducer() {
 
   switch (action.type) {
     case "ADD_TO_CART":
-      var oldCart = _toConsumableArray(action.payload.cart); //check if rim already exists in cart
+      // old cart is used instead of state.cart
+      // because state in reducer isn't persistent
+      var oldCart = _toConsumableArray(action.payload.cart);
 
+      var itemIndex = -1;
 
-      oldCart.includes(action.payload.rim) ? state = _objectSpread({}, state) : oldCart.push(action.payload.rim);
-      state = _objectSpread({}, state, {
-        cart: oldCart
-      });
+      if (oldCart.length > 0) {
+        oldCart.forEach(function (item, index) {
+          if (item.name === action.payload.rim.name) {
+            itemIndex = index;
+            console.log("item name: ".concat(item.name, " && \n                        rim name ").concat(action.payload.rim.name, "\n                        && index: ").concat(itemIndex), oldCart);
+          }
+        });
+      }
+
+      if (itemIndex >= 0) {
+        var item = oldCart[itemIndex];
+        var count = item.count + 1; // add 1 in count of item (rim) & replace item
+
+        oldCart.splice(itemIndex, 1, _objectSpread({}, item, {
+          count: count
+        }));
+        state = _objectSpread({}, state, {
+          cart: oldCart
+        });
+      } else {
+        oldCart.push(_objectSpread({}, action.payload.rim, {
+          count: 1
+        }));
+        state = _objectSpread({}, state, {
+          cart: oldCart
+        });
+      }
+
       break;
+
+    case "REMOVE_FROM_CART":
+      var cart = _toConsumableArray(action.payload.cart);
+
+      var indexOfItemToRemove;
+      cart.forEach(function (item, index) {
+        if (item.name === action.payload.rim.name) {
+          indexOfItemToRemove = index;
+        }
+      });
+      var currentCount = action.payload.rim.count;
+
+      if (currentCount > 1) {
+        // less one item in count
+        currentCount -= 1; // less one in count of item to remove and replace 
+
+        cart.splice(indexOfItemToRemove, 1, _objectSpread({}, action.payload.rim, {
+          count: currentCount
+        }));
+        state = _objectSpread({}, state, {
+          cart: cart
+        });
+      } else {
+        // remove item from cart 
+        cart.splice(indexOfItemToRemove, 1);
+        state = _objectSpread({}, state, {
+          cart: cart
+        });
+      }
+
+      break;
+
+    default:
+      state = _objectSpread({}, state);
   }
 
   return state;

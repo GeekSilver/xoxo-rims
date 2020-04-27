@@ -17,12 +17,12 @@ class Rim extends Component {
     getRim (rim = {}) {
         return (
             <div 
-            className="card col-md-4 offset-md-4"
+            className="card col-md-4 offset-md-4 mt-1"
             >
                 <img
                 src={`storage/${rim.image}`}
                 alt="image of the rim"
-                className="card-img-top"
+                className="card-img-top mt-1"
                 style={{
                     display:"block",
                     maxWidth:"100%",
@@ -32,15 +32,15 @@ class Rim extends Component {
                 <div 
                 className="card-body">
                     <h5 
-                    className="card-title">
+                    className="card-title font-weight-bolder">
                         {rim.name}
                     </h5>
-                    <p
+                    <div
                     className="card-text">
-                        Price: {Number(rim.price).toLocaleString('en-KE', { style: 'currency', currency: 'KES' })}
-                        Size: {rim.size}
-                        Color: {rim.color}
-                    </p>
+                        <p><span className="font-weight-bold">Price: </span>{Number(rim.price).toLocaleString('en-KE', { style: 'currency', currency: 'KES' })}</p>
+                        <p><span className="font-weight-bold">Size: </span>{rim.size}</p>
+                        <p><span className="font-weight-bold">Color:  </span>{rim.color}</p>
+                    </div>
 
                     <a 
                     href="#"
@@ -70,7 +70,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     getOneRimAction,
-    addToCart,
+    addToCart
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rim);
