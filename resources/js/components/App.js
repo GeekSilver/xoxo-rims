@@ -8,13 +8,14 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Nav from './container/Nav';
 import Rims from './container/Rims';
 import store from '../store';
-import {persistor} from '../store';
+import { persistor } from '../store';
 import Rim from './container/Rim';
+import RimForm from './container/RimForm';
 
 import '../../../node_modules/@fortawesome/fontawesome-free/js/all';
 
 class App extends Component {
-    render(){
+    render() {
         return (
             <Provider store={store} >
                 <PersistGate loading={null} persistor={persistor}>
@@ -22,15 +23,17 @@ class App extends Component {
                         <div className="">
                             <Nav />
 
-                        <Switch>
-                            <Route exact path='/' component={Rims}>
-                            </Route>                  
-                            <Route path='/:id' component={Rim}>
-                            </Route>
-                        </Switch>
-                        </div> 
+                            <Switch>
+                                <Route path='/admin' component={RimForm}>
+                                </Route>
+                                <Route path='/:id' component={Rim}>
+                                </Route>
+                                <Route exact path='/' component={Rims}>
+                                </Route>
+                            </Switch>
+                        </div>
                     </BrowserRouter>
-                </PersistGate>                
+                </PersistGate>
             </Provider>
 
         );
@@ -39,6 +42,6 @@ class App extends Component {
 
 if (document.getElementById('root')) {
     ReactDOM.render(
-      <App />  
-    , document.getElementById('root'));
+        <App />
+        , document.getElementById('root'));
 }

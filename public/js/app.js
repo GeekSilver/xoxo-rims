@@ -10819,6 +10819,19 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/form-data/lib/browser.js":
+/*!***********************************************!*\
+  !*** ./node_modules/form-data/lib/browser.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* eslint-env browser */
+module.exports = typeof self == 'object' ? self.FormData : window.FormData;
+
+
+/***/ }),
+
 /***/ "./node_modules/gud/index.js":
 /*!***********************************!*\
   !*** ./node_modules/gud/index.js ***!
@@ -81399,16 +81412,45 @@ function removeFromCart(rim, cart) {
 /*!*******************************************!*\
   !*** ./resources/js/actions/rimAction.js ***!
   \*******************************************/
-/*! exports provided: getAllRimsAction, getOneRimAction, filterAsc, filterDesc, filterByValue */
+/*! exports provided: postRimAction, getAllRimsAction, getOneRimAction, filterAsc, filterDesc, filterByValue */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postRimAction", function() { return postRimAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAllRimsAction", function() { return getAllRimsAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOneRimAction", function() { return getOneRimAction; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "filterAsc", function() { return filterAsc; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "filterDesc", function() { return filterDesc; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "filterByValue", function() { return filterByValue; });
+function postRimAction(data) {
+  return function (dispatch) {
+    return new Promise(function (resolve, reject) {
+      axios.post('/api/rims', data, {
+        headers: {
+          'Content-Type': "multipart/form-data"
+        }
+      }).then(function (response) {
+        dispatch({
+          type: "POST_RIM",
+          payload: {
+            created: true
+          }
+        });
+        resolve(true);
+      })["catch"](function (err) {
+        console.error('error is:', err.response.data);
+        dispatch({
+          type: "POST_RIM",
+          payload: {
+            created: false
+          }
+        });
+        resolve(false);
+      });
+    });
+  };
+}
 function getAllRimsAction() {
   return function (dispatch) {
     axios.get('/api/rims').then(function (_ref) {
@@ -81441,7 +81483,6 @@ function getOneRimAction(id) {
         }
       });
     })["catch"](function (error) {
-      console.log(error);
       dispatch({
         type: "GET_ONE",
         payload: error
@@ -81576,8 +81617,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _container_Rims__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./container/Rims */ "./resources/js/components/container/Rims.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../store */ "./resources/js/store.js");
 /* harmony import */ var _container_Rim__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./container/Rim */ "./resources/js/components/container/Rim.js");
-/* harmony import */ var _node_modules_fortawesome_fontawesome_free_js_all__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../node_modules/@fortawesome/fontawesome-free/js/all */ "./node_modules/@fortawesome/fontawesome-free/js/all.js");
-/* harmony import */ var _node_modules_fortawesome_fontawesome_free_js_all__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_node_modules_fortawesome_fontawesome_free_js_all__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _container_RimForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./container/RimForm */ "./resources/js/components/container/RimForm.js");
+/* harmony import */ var _node_modules_fortawesome_fontawesome_free_js_all__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../node_modules/@fortawesome/fontawesome-free/js/all */ "./node_modules/@fortawesome/fontawesome-free/js/all.js");
+/* harmony import */ var _node_modules_fortawesome_fontawesome_free_js_all__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_node_modules_fortawesome_fontawesome_free_js_all__WEBPACK_IMPORTED_MODULE_10__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -81595,6 +81637,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -81630,12 +81673,15 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: ""
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_container_Nav__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Switch"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
-        exact: true,
-        path: "/",
-        component: _container_Rims__WEBPACK_IMPORTED_MODULE_6__["default"]
+        path: "/admin",
+        component: _container_RimForm__WEBPACK_IMPORTED_MODULE_9__["default"]
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
         path: "/:id",
         component: _container_Rim__WEBPACK_IMPORTED_MODULE_8__["default"]
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+        exact: true,
+        path: "/",
+        component: _container_Rims__WEBPACK_IMPORTED_MODULE_6__["default"]
       }))))));
     }
   }]);
@@ -81668,7 +81714,12 @@ __webpack_require__.r(__webpack_exports__);
 
 var CartItemsDropdown = function CartItemsDropdown(props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    className: "dropdown-menu"
+    className: "dropdown-menu",
+    style: {
+      left: '50%',
+      transform: 'translateX(-50%)',
+      border: '1px solid orange'
+    }
   }, props.items.map(function (item) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
       key: item.id,
@@ -81692,7 +81743,7 @@ var CartItemsDropdown = function CartItemsDropdown(props) {
       currency: 'KES'
     }))))));
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-    className: "float-right"
+    className: "float-right mr-5 font-weight-bold"
   }, props.total.toLocaleString('en-KE', {
     style: 'currency',
     currency: 'KES'
@@ -81922,11 +81973,30 @@ function (_Component) {
       var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "navbar navbar-expand-lg navbar-light bg-primary"
+        className: "navbar navbar-expand-lg navbar-light bg-primary "
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         className: "navbar-brand",
         to: "/"
-      }, "Rim"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      }, "Rim"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-item dropdown",
+        style: {
+          listStyle: 'none'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "nav-link dropdown-toggle",
+        "data-toggle": "dropdown",
+        "data-target": "#shopping-cart"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-shopping-cart",
+        style: {
+          color: 'orange'
+        }
+      }), this.cartLength(this.props.cart) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "badge badge-warning text-dark align-middle mb-3"
+      }, this.cartLength(this.props.cart)) : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CartItemsDropdown__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        total: this.cartTotal(this.props.cart),
+        items: this.props.cart
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "navbar-toggler",
         "data-toggle": "collapse",
         "data-target": "#options",
@@ -82014,24 +82084,7 @@ function (_Component) {
         style: {
           marginLeft: "12px"
         }
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        className: "nav-item dropdown"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        className: "nav-link dropdown-toggle",
-        "data-toggle": "dropdown",
-        "data-target": "#shopping-cart"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-shopping-cart"
-      }), this.cartLength(this.props.cart) ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        className: "badge badge-warning text-center mb-3",
-        style: {
-          color: "black",
-          verticalAlign: "middle"
-        }
-      }, this.cartLength(this.props.cart)) : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CartItemsDropdown__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        total: this.cartTotal(this.props.cart),
-        items: this.props.cart
-      })))));
+      })))))));
     }
   }]);
 
@@ -82172,6 +82225,162 @@ var mapDispatchToProps = {
   addToCart: _actions_cartAction__WEBPACK_IMPORTED_MODULE_3__["addToCart"]
 };
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(Rim));
+
+/***/ }),
+
+/***/ "./resources/js/components/container/RimForm.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/container/RimForm.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _actions_rimAction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/rimAction */ "./resources/js/actions/rimAction.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var form_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! form-data */ "./node_modules/form-data/lib/browser.js");
+/* harmony import */ var form_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(form_data__WEBPACK_IMPORTED_MODULE_3__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+var RimForm =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(RimForm, _Component);
+
+  function RimForm(props) {
+    var _this;
+
+    _classCallCheck(this, RimForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RimForm).call(this, props));
+    _this.formData = new form_data__WEBPACK_IMPORTED_MODULE_3___default.a();
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(RimForm, [{
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      this.formData.append('name', document.getElementById('rim-name').value);
+      this.formData.append('size', document.getElementById('rim-size').value);
+      this.formData.append('color', document.getElementById('rim-color').value);
+      this.formData.append('price', document.getElementById('rim-price').value);
+      this.formData.append('image', document.getElementById('rim-image').files[0]);
+      this.props.postRimAction(this.formData).then(function (boolVal) {
+        console.log("this is : ".concat(boolVal));
+
+        if (boolVal) {
+          document.getElementById('hidden-error').classList.add('d-none');
+          document.getElementById('hidden-success').classList.remove('d-none');
+        } else {
+          document.getElementById('hidden-success').classList.add('d-none');
+          document.getElementById('hidden-error').classList.remove('d-none');
+        }
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        encType: "multipart/form-data",
+        onSubmit: this.handleSubmit
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "hidden-error",
+        className: "row d-none"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-danger col-8 offset-2"
+      }, "Encountered an error adding Rim")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "hidden-success",
+        className: "row d-none"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "text-success col-8 offset-2"
+      }, "Rim Added successfully")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "rim-name"
+      }, "Rim Name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        id: "rim-name",
+        className: "form-control"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "rim-size"
+      }, "Rim Size"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        id: "rim-size",
+        className: "form-control"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "rim-price"
+      }, "Rim Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        id: "rim-price",
+        className: "form-control"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "rim-color"
+      }, "Rim Color"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        id: "rim-color",
+        className: "form-control"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "rim-image"
+      }, "Rim Image"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "file",
+        id: "rim-image",
+        className: "form-control"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn-primary"
+      }, "Add RIm")));
+    }
+  }]);
+
+  return RimForm;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    created: state.postRimReducer.created
+  };
+};
+
+var mapDispatchToProps = {
+  postRimAction: _actions_rimAction__WEBPACK_IMPORTED_MODULE_1__["postRimAction"]
+};
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(RimForm));
 
 /***/ }),
 
@@ -82473,6 +82682,48 @@ var getRimsReducer = function getRimsReducer() {
 
 /***/ }),
 
+/***/ "./resources/js/reducers/postRimReducer.js":
+/*!*************************************************!*\
+  !*** ./resources/js/reducers/postRimReducer.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var postRimReducer = function postRimReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    created: ''
+  };
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case "POST_RIM":
+      state = _objectSpread({}, state, {
+        created: action.payload.created
+      });
+      console.log("post rim ".concat(action.payload.created));
+      break;
+
+    default:
+      state = _objectSpread({}, state);
+      console.log("default is : ".concat(action.payload));
+      break;
+  }
+
+  return state;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (postRimReducer);
+
+/***/ }),
+
 /***/ "./resources/js/store.js":
 /*!*******************************!*\
   !*** ./resources/js/store.js ***!
@@ -82489,12 +82740,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux_persist_lib_storage__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(redux_persist_lib_storage__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _reducers_getRimsReducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./reducers/getRimsReducer */ "./resources/js/reducers/getRimsReducer.js");
 /* harmony import */ var _reducers_cartReducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./reducers/cartReducer */ "./resources/js/reducers/cartReducer.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
-/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+/* harmony import */ var _reducers_postRimReducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./reducers/postRimReducer */ "./resources/js/reducers/postRimReducer.js");
+/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
+/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
 
 
  //defaults to local storage for web
+
 
 
 
@@ -82508,8 +82761,9 @@ var persistCartReducer = Object(redux_persist__WEBPACK_IMPORTED_MODULE_1__["pers
 var composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || redux__WEBPACK_IMPORTED_MODULE_0__["compose"];
 var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   getRimsReducer: _reducers_getRimsReducer__WEBPACK_IMPORTED_MODULE_3__["default"],
-  cartReducer: persistCartReducer
-}), {}, composeEnhancers(Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_logger__WEBPACK_IMPORTED_MODULE_5__["logger"], redux_thunk__WEBPACK_IMPORTED_MODULE_6__["default"])));
+  cartReducer: persistCartReducer,
+  postRimReducer: _reducers_postRimReducer__WEBPACK_IMPORTED_MODULE_5__["default"]
+}), {}, composeEnhancers(Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_logger__WEBPACK_IMPORTED_MODULE_6__["logger"], redux_thunk__WEBPACK_IMPORTED_MODULE_7__["default"])));
 var persistor = Object(redux_persist__WEBPACK_IMPORTED_MODULE_1__["persistStore"])(store);
 /* harmony default export */ __webpack_exports__["default"] = (store);
 

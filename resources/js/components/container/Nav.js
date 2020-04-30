@@ -80,10 +80,32 @@ class Nav extends Component {
 
     render() {
         return (
-            <div className="navbar navbar-expand-lg navbar-light bg-primary">
+            <div className="navbar navbar-expand-lg navbar-light bg-primary ">
                 <Link className="navbar-brand" to="/">
                     Rim
-        </Link>
+                </Link>
+
+                <li className="nav-item dropdown" style={{listStyle: 'none'}}>
+                    <a className="nav-link dropdown-toggle"
+                        data-toggle="dropdown"
+                        data-target="#shopping-cart">
+                        <i className="fas fa-shopping-cart" style={{color: 'orange'}}></i>
+                        {
+                            this.cartLength(this.props.cart)
+                                ?
+                                 <span
+                                    className="badge badge-warning text-dark align-middle mb-3">
+                                    {this.cartLength(this.props.cart)}
+                                </span>
+                                :
+                                ''
+                        }
+
+                    </a>
+                    <CartItemsDropdown
+                        total={this.cartTotal(this.props.cart)}
+                        items={this.props.cart} />
+                </li>
                 <button
                     className="navbar-toggler"
                     data-toggle="collapse"
@@ -95,6 +117,7 @@ class Nav extends Component {
                 >
                     <span className="navbar-toggler-icon"></span>
                 </button>
+
 
                 <div className="collapse navbar-collapse" id="options">
                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -186,28 +209,6 @@ class Nav extends Component {
                                 </p>
 
                             </div>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle"
-                                data-toggle="dropdown"
-                                data-target="#shopping-cart">
-                                <i className="fas fa-shopping-cart"></i>
-                                {
-                                    this.cartLength(this.props.cart)
-                                        ?
-                                        <span
-                                            className="badge badge-warning text-center mb-3"
-                                            style={{ color: "black", verticalAlign: "middle" }}>
-                                            {this.cartLength(this.props.cart)}
-                                        </span>
-                                        :
-                                        ''
-                                }
-
-                            </a>
-                            <CartItemsDropdown
-                                total={this.cartTotal(this.props.cart)}
-                                items={this.props.cart} />
                         </li>
                     </ul>
                 </div>

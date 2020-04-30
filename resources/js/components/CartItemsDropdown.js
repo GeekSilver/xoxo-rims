@@ -5,7 +5,7 @@ import { removeFromCart } from '../actions/cartAction';
 // render cart items iteratively
 const CartItemsDropdown = (props) => {
     return (
-        <ul className="dropdown-menu">
+        <ul className="dropdown-menu" style={{left: '50%', transform: 'translateX(-50%)', border: '1px solid orange'}}>
             {props.items.map(item => (
                 <li key={item.id} className="dropdown-item">
                     <table className="table table-responsive">
@@ -55,7 +55,7 @@ const CartItemsDropdown = (props) => {
                     </table>
                 </li>)
             )}
-            <span className="float-right">
+            <span className="float-right mr-5 font-weight-bold">
                 {props.total.toLocaleString('en-KE', {
                     style: 'currency',
                     currency: 'KES'
