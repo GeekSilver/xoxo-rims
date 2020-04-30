@@ -29,7 +29,7 @@ class Rims extends Component {
                      >
                         <div 
                         className="card-body">
-                            <RimImage src={`storage/${rim.image}`} />
+                            <RimImage src={rim.image} />
                             <RimSize size={rim.size}/>
                             <div
                             className="card-footer"

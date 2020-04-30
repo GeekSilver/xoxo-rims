@@ -20,7 +20,7 @@ class Rim extends Component {
             className="card col-md-4 offset-md-4 mt-1"
             >
                 <img
-                src={`storage/${rim.image}`}
+                src={rim.image}
                 alt="image of the rim"
                 className="card-img-top mt-1"
                 style={{

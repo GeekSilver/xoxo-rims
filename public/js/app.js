@@ -82171,7 +82171,7 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card col-md-4 offset-md-4 mt-1"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "storage/".concat(rim.image),
+        src: rim.image,
         alt: "image of the rim",
         className: "card-img-top mt-1",
         style: {
@@ -82454,7 +82454,7 @@ function (_Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "card-body"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RimImage__WEBPACK_IMPORTED_MODULE_5__["default"], {
-          src: "storage/".concat(rim.image)
+          src: rim.image
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RimSize__WEBPACK_IMPORTED_MODULE_4__["default"], {
           size: rim.size
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

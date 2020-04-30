@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Rim;
 use Illuminate\Http\Request;
+use JD\Cloudder\Facades\Cloudder;
 
 class RimController extends Controller
 {
@@ -46,13 +47,16 @@ class RimController extends Controller
             'image' => 'required | image',
         ]);
 
-        //store the rim image and get path to the stored rim
-        $path = $rim['image']->store('rims');
+        // store the rim image in cloudinary
+        Cloudder::upload($rim['image']);
+        //  get path to the stored rim
+        $cloudinary_last_upload_details = Cloudder::getResult();
+        $path = $cloudinary_last_upload_details['secure_url'];
 
-        //assign the path to the rim image field of Rim model
+        // assign the path to the rim image field of Rim model
         $rim['image'] = $path;
         
-        //store the rim
+        // store the rim
         Rim::create($rim);
 
         return response()->json(['created' => true]);
