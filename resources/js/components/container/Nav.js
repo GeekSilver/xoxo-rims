@@ -159,7 +159,7 @@ class Nav extends Component {
                                     <input
                                         type="range"
                                         min="3000"
-                                        max="30000"
+                                        max="530000"
                                         step="500"
                                         defaultValue="6000"
                                         id="price-slider"
@@ -193,7 +193,7 @@ class Nav extends Component {
                                     <input
                                         type="range"
                                         min="14"
-                                        max="20"
+                                        max="27"
                                         defaultValue="17"
                                         step="1"
                                         id="size-slider"
